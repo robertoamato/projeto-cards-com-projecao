@@ -1,0 +1,43 @@
+name: Testes Automatizados
+
+on:
+  # Dispara a ação quando houver um push ou pull request na branch principal
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Verifica o código no repositório
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      # Configura a versão do Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Altere para a versão do Node.js que seu projeto utiliza
+
+      # Instala dependências do projeto
+      - name: Instalar dependências
+        run: npm install
+
+      # Executa os testes
+      - name: Executar testes
+        run: npm test
+
+      # Exibe a cobertura de testes (caso você use uma ferramenta de cobertura)
+      - name: Exibir cobertura de testes
+        run: npm run coverage
+{
+  "scripts": {
+    "test": "jest",  // Ou o comando que você usa para rodar seus testes
+    "coverage": "jest --coverage"  // Caso você use Jest para cobertura de testes
+  }
+}
